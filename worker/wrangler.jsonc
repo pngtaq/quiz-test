@@ -1,0 +1,33 @@
+// Realtime room server: a Worker that routes HTTP + WebSocket traffic to one
+// QuizRoom Durable Object per room code.
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "quiz-together-realtime",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "QUIZ_ROOM",
+        "class_name": "QuizRoom"
+      }
+    ]
+  },
+  // SQLite-backed Durable Objects are the recommended storage backend for new
+  // classes (and are available on the Workers Free plan).
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["QuizRoom"]
+    }
+  ],
+  "vars": {
+    // Comma-separated list of web origins allowed to call this worker.
+    // Override at deploy time:
+    //   wrangler deploy --config worker/wrangler.jsonc --var ALLOWED_ORIGINS:https://your-web-app.example
+    "ALLOWED_ORIGINS": "http://localhost:3000,http://127.0.0.1:3000"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

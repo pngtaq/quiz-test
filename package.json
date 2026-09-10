@@ -1,0 +1,47 @@
+{
+  "name": "quiz-together",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n web,realtime -c cyan,magenta \"npm:dev:web\" \"npm:dev:realtime\"",
+    "dev:web": "next dev --port 3000",
+    "dev:realtime": "wrangler dev --config worker/wrangler.jsonc --port 8787",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p worker/tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run lint && npm run typecheck && npm run test",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "npm run deploy:realtime && npm run deploy:web",
+    "deploy:realtime": "wrangler deploy --config worker/wrangler.jsonc",
+    "deploy:web": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --config worker/wrangler.jsonc worker/worker-configuration.d.ts"
+  },
+  "dependencies": {
+    "@opennextjs/cloudflare": "1.20.6",
+    "next": "16.3.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260910.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^24.13.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "^19.2.0",
+    "concurrently": "10.0.5",
+    "eslint": "~9.39.5",
+    "eslint-config-next": "16.3.4",
+    "tailwindcss": "4.3.3",
+    "typescript": "~6.0.3",
+    "vitest": "5.0.0",
+    "wrangler": "4.130.0"
+  }
+}
