@@ -464,3 +464,5 @@ Then swap it in `QuizRoom`. The engine already re-validates room state after que
 - Rate-limit room creation with the [Workers Rate Limiting binding](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/).
 - Let leaders kick players (`KICK_PLAYER` → `removePlayer`).
 - Add streak bonuses in `scoring.ts`, which is a single function with tests.
+#   q u i z - t e s t  
+ 
